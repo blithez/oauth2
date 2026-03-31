@@ -25,6 +25,7 @@ import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.oauth.sap.SAPIasModule;
 import com.googlesource.gerrit.plugins.oauth.sap.SAPIasOAuthLoginProvider;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.eclipse.jgit.lib.Config;
 
 public class Module extends AbstractModule {
@@ -43,7 +44,7 @@ public class Module extends AbstractModule {
         config.getSubsections("plugin").stream()
             .filter(s -> s.startsWith(pluginName))
             .map(s -> s.substring(pluginName.length() + 1, s.length() - 6))
-            .toList();
+            .collect(Collectors.toList());
     this.externalIdFactory = externalIdFactory;
     this.cfg = config;
   }

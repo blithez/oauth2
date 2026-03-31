@@ -25,6 +25,7 @@ import com.googlesource.gerrit.plugins.oauth.cas.CasOAuthService;
 import com.googlesource.gerrit.plugins.oauth.cognito.CognitoOAuthService;
 import com.googlesource.gerrit.plugins.oauth.dex.DexOAuthService;
 import com.googlesource.gerrit.plugins.oauth.facebook.FacebookOAuthService;
+import com.googlesource.gerrit.plugins.oauth.gitee.GiteeOAuthService;
 import com.googlesource.gerrit.plugins.oauth.github.GitHubOAuthService;
 import com.googlesource.gerrit.plugins.oauth.gitlab.GitLabOAuthService;
 import com.googlesource.gerrit.plugins.oauth.google.GoogleOAuthService;
@@ -53,6 +54,7 @@ class HttpModule extends AbstractModule {
     install(new OAuthServiceModule(cfgFactory, CognitoOAuthService.class));
     install(new OAuthServiceModule(cfgFactory, DexOAuthService.class));
     install(new OAuthServiceModule(cfgFactory, FacebookOAuthService.class));
+    install(new OAuthServiceModule(cfgFactory, GiteeOAuthService.class));
     install(new OAuthServiceModule(cfgFactory, GitHubOAuthService.class));
     install(new OAuthServiceModule(cfgFactory, GitLabOAuthService.class));
     install(new OAuthServiceModule(cfgFactory, GoogleOAuthService.class));

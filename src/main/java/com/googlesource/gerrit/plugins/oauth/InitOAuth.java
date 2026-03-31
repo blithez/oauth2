@@ -33,6 +33,7 @@ import com.googlesource.gerrit.plugins.oauth.cognito.CognitoOAuthService;
 import com.googlesource.gerrit.plugins.oauth.dex.DexOAuthService;
 import com.googlesource.gerrit.plugins.oauth.facebook.FacebookOAuthService;
 import com.googlesource.gerrit.plugins.oauth.github.GitHubOAuthService;
+import com.googlesource.gerrit.plugins.oauth.gitee.GiteeOAuthService;
 import com.googlesource.gerrit.plugins.oauth.gitlab.GitLabOAuthService;
 import com.googlesource.gerrit.plugins.oauth.google.GoogleOAuthService;
 import com.googlesource.gerrit.plugins.oauth.keycloak.KeycloakOAuthService;
@@ -70,6 +71,7 @@ public class InitOAuth implements InitStep {
   private final Section bitbucketOAuthProviderSection;
   private final Section casOAuthProviderSection;
   private final Section facebookOAuthProviderSection;
+  private final Section giteeOAuthProviderSection;
   private final Section gitlabOAuthProviderSection;
   private final Section lemonldapOAuthProviderSection;
   private final Section dexOAuthProviderSection;
@@ -92,6 +94,7 @@ public class InitOAuth implements InitStep {
     this.bitbucketOAuthProviderSection = getConfigSection(BitbucketOAuthService.class);
     this.casOAuthProviderSection = getConfigSection(CasOAuthService.class);
     this.facebookOAuthProviderSection = getConfigSection(FacebookOAuthService.class);
+    this.giteeOAuthProviderSection = getConfigSection(GiteeOAuthService.class);
     this.gitlabOAuthProviderSection = getConfigSection(GitLabOAuthService.class);
     this.lemonldapOAuthProviderSection = getConfigSection(LemonLDAPOAuthService.class);
     this.dexOAuthProviderSection = getConfigSection(DexOAuthService.class);
@@ -149,6 +152,14 @@ public class InitOAuth implements InitStep {
             "Use Facebook OAuth provider for Gerrit login?");
     if (configueFacebookOAuthProvider) {
       configureOAuth(facebookOAuthProviderSection);
+    }
+
+    boolean configureGiteeOAuthProvider =
+        ui.yesno(
+            isConfigured(giteeOAuthProviderSection),
+            "Use Gitee OAuth provider for Gerrit login?");
+    if (configureGiteeOAuthProvider && configureOAuth(giteeOAuthProviderSection)) {
+      giteeOAuthProviderSection.string("Gitee Root URL (optional)", ROOT_URL, "https://gitee.com");
     }
 
     boolean configureGitLabOAuthProvider =
